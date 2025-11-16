@@ -1,0 +1,83 @@
+body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color:rgb(249, 233, 213);
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+
+#nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 7rem;
+    background-color: bisque;
+    justify-content: space-around;
+    display: flex;
+}
+
+
+#nav-list li a {
+    display: block;
+    color: rgb(79, 0, 0);
+    text-align: center;
+    padding: 2rem 6rem;
+    text-decoration: none;
+}
+
+#nav-list li a:hover {
+    background-color: rgb(197, 174, 147);
+}
+
+.search {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+
+.search input[type="text"] {
+    padding: 1rem 10rem;
+    margin-right: 10px;
+    border: none;
+    font-size: 17px;
+    border-radius: 4px;
+}
+
+.search button {
+    padding: 1rem 1rem;
+    background: white;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search button i {
+    font-size: 18px;
+}
+
+.search button:hover {
+    background: darkgreen;
+    color: white;
+}
+
+.filter {
+    margin: 1rem 5rem;
+    padding: 2rem;
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.filter button {
+    background-color: rgb(255, 184, 184);
+    color: darkgreen;
+    padding: 1rem 4rem;
+}
+
+.filter button:hover {
+    background: darkgreen;
+    color: white;
+}
