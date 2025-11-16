@@ -1,3 +1,8 @@
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementsByClassName('search-input');
+const modal = document.getElementById("myModal");
+const span = document.getElementsByClassName("close")[0];
+
 async function fetchData(url, options) {
     try{
         const response = await fetch(url, options);
@@ -21,8 +26,7 @@ async function getRestaurants() {
      }
 
      const restaurantData = await fetchData(url, options);
-     console.log(restaurantData);
-     await displayRestaurant(restaurantData);
+     await displayRestaurants(restaurantData);
 
     }
     catch(error) {
@@ -30,7 +34,7 @@ async function getRestaurants() {
     }
 }
 
-async function displayRestaurant(data){
+async function displayRestaurants(data){
     console.log(data);
     data.sort((a, b) => {
         let x = a.name.toLowerCase();
@@ -40,17 +44,42 @@ async function displayRestaurant(data){
         return 0;
     });
 
+
     for (let i = 0; i < data.length; i++) {
         let container = document.getElementById("container");
+
+
         let box = document.createElement("div");
-        let nameOfRestaurant = document.createTextNode(`Name: ${data[i].name}`)
-
         box.className = "box";
+        box.onclick = function() {
+            modal.style.display = "block";
+        }
 
-        box.appendChild(nameOfRestaurant);
+        let nameElement = document.createElement("h3");
+        let cityElement = document.createElement("p");
+        let addressElement = document.createElement("p");
 
+        let nameText = document.createTextNode(data[i].name);
+        let cityText = document.createTextNode(data[i].city);
+        let addressText = document.createTextNode(data[i].address);
+    
+
+        nameElement.appendChild(nameText);
+        cityElement.appendChild(cityText);
+        addressElement.appendChild(addressText);
+
+        box.appendChild(nameElement);
+        box.appendChild(cityElement);
+        box.appendChild(addressElement);
         container.appendChild(box);
    }
+
+}
+
+
+async function restaurantById(id) {
+    modal.style.display = "block";
+    
 }
 
 
@@ -74,5 +103,18 @@ async function sendUserData() {       //käyttäjätunnusta varten
      console.error('An error occurred:', error);
    }
 }  
+
+
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    
+}
 
 getRestaurants();
