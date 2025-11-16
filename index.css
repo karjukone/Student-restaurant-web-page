@@ -154,3 +154,10 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+#menu-btn {
+    font-size: 30px;
+    border-radius: 15px;
+    margin: 1rem 8rem;
+    
+}

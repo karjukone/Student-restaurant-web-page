@@ -1,3 +1,4 @@
+
 export async function fetchData(url, options) {
     try{
         const response = await fetch(url, options);
@@ -42,8 +43,35 @@ export async function getRestaurantById(id) {
         console.log(error);
     }    
 }
+ 
+export async function getDailyMenu(id, lang) {
+    try{
+        const url = `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/weekly/${id}/${lang}`;
+        const options = {
+            method: 'GET',
+        }
+        const dailyData = await fetchData(url, options);
+        return dailyData;
+    }
+    catch(error) {
+        console.log(error);
+    }   
+    
+}
 
-
+export async function getWeeklyMenu(id, lang) {
+    try{
+        const url = `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/weekly/${id}/${lang}`;
+        const options = {
+            method: 'GET',
+        }
+        const dailyData = await fetchData(url, options);
+        return dailyData;
+    }
+    catch(error) {
+        console.log(error);
+    }   
+}
 
 
 

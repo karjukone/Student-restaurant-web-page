@@ -1,13 +1,32 @@
-import {fetchData, getRestaurants, getRestaurantById, sendUserData} from './fetch.js';
+import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu, sendUserData} from './fetch.js';
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementsByClassName('search-input');
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
+let language = 'fi';
+let daily = true;
+let dailyOrWeeklyBtn = document.getElementById("menu-btn");
 
 
+dailyOrWeeklyBtn.addEventListener("click", event => {
+    if (daily) {
+        dailyOrWeeklyBtn.style.backgroundColor = "pink";
+        dailyOrWeeklyBtn.style.color = "darkgreen";
+        dailyOrWeeklyBtn.textContent = "Show weekly menu";
+        displayRestaurantById();
+        daily = false;
+    }
+    else {
+        dailyOrWeeklyBtn.style.backgroundColor = "darkgreen";
+        dailyOrWeeklyBtn.style.color = "pink";
+        dailyOrWeeklyBtn.textContent = "Show daily menu";
+        displayRestaurantById();
+        daily = true;        
+    }
+});
 
-async function displayRestaurants(data){
+async function displayRestaurants(data){  //cleaanaappa tätä funktioo vähä
     try {
         console.log(data);
         data.sort((a, b) => {
@@ -62,15 +81,24 @@ async function displayRestaurants(data){
 async function displayRestaurantById(id) {
     console.log(id);
 
-    let resData = await getRestaurantById(id);
-    let restaurantId = document.createElement("p");
-    let testi = document.createTextNode(id);
+    let data = await getRestaurantById(id);
+    document.getElementById("name").textContent = data.name;
+    document.getElementById("address").textContent = data.address;
+    document.getElementById("postal-code").textContent = data.postalCode;
+    document.getElementById("phone").textContent = data.phone;
+    document.getElementById("city").textContent = data.city;
 
-    //restaurantById.appendChild(testi);
-
-
-    
+    if (daily) {
+        let menu = await getDailyMenu(id, language);
+        console.log(menu);
+    }
+    else {
+        let menu = await getWeeklyMenu(id, language);
+    }
 }
+
+
+
 
 
 
@@ -82,7 +110,6 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-    
 }
 
 
