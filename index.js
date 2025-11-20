@@ -7,24 +7,24 @@ const span = document.getElementsByClassName("close")[0];
 let language = 'fi';
 let daily = true;
 let dailyOrWeeklyBtn = document.getElementById("menu-btn");
+let currentId = '';
 
 
-dailyOrWeeklyBtn.addEventListener("click", event => {
+    dailyOrWeeklyBtn.addEventListener("click", event => {
     if (daily) {
         dailyOrWeeklyBtn.style.backgroundColor = "pink";
         dailyOrWeeklyBtn.style.color = "darkgreen";
         dailyOrWeeklyBtn.textContent = "Show weekly menu";
-        displayRestaurantById();
         daily = false;
     }
     else {
         dailyOrWeeklyBtn.style.backgroundColor = "darkgreen";
         dailyOrWeeklyBtn.style.color = "pink";
         dailyOrWeeklyBtn.textContent = "Show daily menu";
-        displayRestaurantById();
         daily = true;        
     }
 });
+
 
 async function displayRestaurants(data){  //cleaanaappa tätä funktioo vähä
     try {
@@ -46,9 +46,11 @@ async function displayRestaurants(data){  //cleaanaappa tätä funktioo vähä
             box.className = "box";
             box.setAttribute("id", `${data[i]._id}`);
 
+
             box.addEventListener("click", event => {
                 modal.style.display = "block";
                 displayRestaurantById(event.target.id)
+                currentId = (event.target.id);
             });
 
             let nameElement = document.createElement("h2");
@@ -68,6 +70,7 @@ async function displayRestaurants(data){  //cleaanaappa tätä funktioo vähä
             box.appendChild(cityElement);
             box.appendChild(addressElement);
             container.appendChild(box);
+
         }
     }
     catch(error) {
@@ -78,23 +81,43 @@ async function displayRestaurants(data){  //cleaanaappa tätä funktioo vähä
 }
 
 
-async function displayRestaurantById(id) {
-    console.log(id);
 
+async function displayRestaurantById(id) {
+    
+    console.log(id);
     let data = await getRestaurantById(id);
     document.getElementById("name").textContent = data.name;
     document.getElementById("address").textContent = data.address;
     document.getElementById("postal-code").textContent = data.postalCode;
     document.getElementById("phone").textContent = data.phone;
     document.getElementById("city").textContent = data.city;
+    let menu = await getDailyMenu(id, language)
+    console.log(menu);
+    console.log(menu[0]);
 
-    if (daily) {
-        let menu = await getDailyMenu(id, language);
-        console.log(menu);
+    for (let i = 0; i < menu.length; i++) {
+
+        let pName = document.createElement("p");
+        pName.textContent = menu[i].name;
+
+        let pPrice = document.createElement("p");
+        pPrice.textContent = menu[i].price;
+
+        let pDiets = document.createElement("p");
+        pDiets.textContent = menu[i].diets;
+
+
+        let courses = document.getElementById("menudiv");
+        courses.appendChild(pName, pPrice, pDiets);
+        courses.appendChild(pPrice);
+        courses.appendChild(pDiets);
     }
-    else {
-        let menu = await getWeeklyMenu(id, language);
-    }
+
+
+
+
+
+  // while (modal.style.display = "block") {
 }
 
 
@@ -115,3 +138,4 @@ window.onclick = function(event) {
 
 const restaurantData = await getRestaurants();
 const data = await displayRestaurants(restaurantData);
+

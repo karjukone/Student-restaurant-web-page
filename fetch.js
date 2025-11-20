@@ -46,12 +46,13 @@ export async function getRestaurantById(id) {
  
 export async function getDailyMenu(id, lang) {
     try{
-        const url = `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/weekly/${id}/${lang}`;
+        const url = `https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants/daily/${id}/${lang}`;
         const options = {
             method: 'GET',
         }
         const dailyData = await fetchData(url, options);
-        return dailyData;
+        //console.log(dailyData.courses)
+        return (dailyData.courses);
     }
     catch(error) {
         console.log(error);
