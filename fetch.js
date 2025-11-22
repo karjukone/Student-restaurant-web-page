@@ -50,9 +50,9 @@ export async function getDailyMenu(id, lang) {
         const options = {
             method: 'GET',
         }
-        const dailyData = await fetchData(url, options);
+        const dailyData = fetchData(url, options);
         //console.log(dailyData.courses)
-        return (dailyData.courses);
+        return (dailyData);
     }
     catch(error) {
         console.log(error);
@@ -66,8 +66,9 @@ export async function getWeeklyMenu(id, lang) {
         const options = {
             method: 'GET',
         }
-        const dailyData = await fetchData(url, options);
-        return dailyData;
+        const weeklyData = await fetchData(url, options);
+        console.log(weeklyData);
+        return weeklyData.days;
     }
     catch(error) {
         console.log(error);

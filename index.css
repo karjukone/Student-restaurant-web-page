@@ -85,11 +85,25 @@ body {
     color:  rgb(250, 208, 208);
 }
 
+.error {
+    color: red;
+}
+
+#restaurants {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    align-items: center;
     flex-grow: 1rem;
+    width: 80%;
 }
 
 .box{
@@ -100,7 +114,15 @@ body {
     margin: 10px;
     color: aliceblue;
     display: grid;
-    place-items: center;
+    padding: 2rem;
+}
+
+.box h2 {
+    font-size: 2rem;
+}
+
+.box p {
+    font-size: 20px;
 }
 
 
@@ -164,5 +186,14 @@ body {
 
 .menudiv {
     border: solid tomato 3px;
-    
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content:baseline;
+    padding-left: 5rem;
+   
+}
+
+.menucard {
+    font-size: 30px;
 }

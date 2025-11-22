@@ -18,16 +18,20 @@
     <div class="search">
         <form action="#" id="search-form">
             <input type="text" placeholder="Etsi ravintola" class="search-input">
-            <button type="submit">
+            <button type="submit" onclick="displayRestaurants()">
             </button>
         </form>
+        <p id="error-msg" class="error"></p>
     </div>
     <div class="filter">
-        <button>filter</button>
-        <button>remove filter</button>
+        <button>Valitse kaupunki</button>
+        <button>Valitse ruokavalio</button>
+        <button>Poista valinnat</button>
     </div>
-    <div class="container" id="container">
-    </div>
+    <section id="restaurants">
+        <div class="container" id="container">
+        </div>
+    </section>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -43,7 +47,7 @@
             <div class="modal-text">
                 <div class="menudiv" id="menudiv">
                     <h1>RUOKALISTA</h1>
-                    <div class="menucard">
+                    <div id="menucard" class="menucard">
                         <h2></h2>
                         <p id="food0"></p>
                         <p id="food1"></p>
