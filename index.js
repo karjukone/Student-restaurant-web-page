@@ -3,26 +3,43 @@ import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu, sendUser
 import { display, displayRestaurants, displayRestaurantById, displayCard, displayError, filterRestaurants } from './display.js';
 
 const searchForm = document.getElementById("search-form");
-const searchInput = document.getElementsByClassName('search-input');
+const searchInput = document.getElementById("search-input");
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 let language = 'fi';
 let daily = true;
 let dailyOrWeeklyBtn = document.getElementById("menu-btn");
+const removeFilterBtn = document.getElementById("removeFilterBtn");
+const cityBtn = document.getElementById("cityBtn");
 let currentId = '';
 const errorMsg = document.getElementById("error-msg");
 
-searchForm.addEventListener("submit", event => {
+searchForm.addEventListener ("submit", async event => {
     event.preventDefault();
 
-    const city = searchInput.value;
-
-    if(city) {
-        displayRestaurants(city);
+    const category = searchInput.value;
+        console.log('Search input value:', category);
+    if(category) {
+        try{
+            await displayRestaurants(category);
+        }
+        catch(error){
+            console.log(error);
+        }
     }
     else {
-        displayError("Please enter a city");
+        displayError("kirjoita kaupunki");
     }
+})
+
+removeFilterBtn.addEventListener ("click", async event => {
+    event.preventDefault();
+    await displayRestaurants();
+})
+
+cityBtn.addEventListener("click", async event => {
+    let cityValue = cityBtn.value;
+    await displayRestaurants(cityValue);
 })
 
 
@@ -58,5 +75,5 @@ window.onclick = function(event) {
 }
 
 
-const data = await displayRestaurants("helsinki");
+const data = await displayRestaurants();
 

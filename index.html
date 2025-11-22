@@ -11,22 +11,52 @@
     <nav>
         <ul id="nav-list">
             <li><a>Etusivu</a></li>
-            <li><a>profiili</a></li>
+            <li><a href="profile.html">profiili</a></li>
             <li><a>kieli</a></li>
         </ul>
     </nav>
     <div class="search">
         <form action="#" id="search-form">
-            <input type="text" placeholder="Etsi ravintola" class="search-input">
-            <button type="submit" onclick="displayRestaurants()">
+            <input id="search-input" type="text" placeholder="Etsi ravintola" class="search-input">
+            <button type="submit">
             </button>
         </form>
         <p id="error-msg" class="error"></p>
     </div>
     <div class="filter">
-        <button>Valitse kaupunki</button>
-        <button>Valitse ruokavalio</button>
-        <button>Poista valinnat</button>
+        <select name="Valitse kaupunki" id="cityBtn">
+            <option value="" selected>Valitse kaupunki</option>
+            <option value="espoo">Espoo</option>
+            <option value="Helsinki">Helsinki</option>
+            <option value="Hyvinkää">Hyvinkää</option>
+            <option value="Hämeenlinna">Hämeenlinna</option>
+            <option value="Ikaalinen">Ikaalinen</option>
+            <option value="Joensuu">Joensuu</option>
+            <option value="Jyväskylä">Jyväskylä</option>
+            <option value="Kemi">Kemi</option>
+            <option value="Kokkola">Kokkola</option>
+            <option value="Kouvola">Kouvola</option>
+            <option value="Kuopio">Kuopio</option>
+            <option value="Lappeenranta">Lappeenranta</option>
+            <option value="liminka">Liminka</option>
+            <option value="oulu">Oulu</option> 
+            <option value="pori">Pori</option>
+            <option value="Rauma">Rauma</option>            
+            <option value="riihimäki">Riihimäki</option>
+            <option value="rovaniemi">Rovaniemi</option>
+            <option value="Seinäjoki">Seinäjoki</option>
+            <option value="tampere">Tampere</option>
+            <option value="Turku">Turku</option>
+            <option value="Vaasa">Vaasa</option>
+            <option value="valkeakoski">Valkeakoski</option>
+            <option value="Vantaa">Vantaa</option>
+            <option value="Ylivieska">Ylivieska</option>
+        </select>
+        <select name="company" id="companyBtn">
+            <option value="Compass Group">Compass Group</option>
+            <option value="Sodexo">Sodexo</option>
+        </select>
+        <button id="removeFilterBtn" type="click">Poista valinnat</button>
     </div>
     <section id="restaurants">
         <div class="container" id="container">
@@ -48,15 +78,6 @@
                 <div class="menudiv" id="menudiv">
                     <h1>RUOKALISTA</h1>
                     <div id="menucard" class="menucard">
-                        <h2></h2>
-                        <p id="food0"></p>
-                        <p id="food1"></p>
-                        <p id="food2"></p>
-                        <p id="food3"></p>
-                        <p id="food4"></p>
-                        <p id="food5"></p>
-                        <p id="food6"></p>
-                        <p id="food7"></p>
                     </div>
                 </div>
             </div>

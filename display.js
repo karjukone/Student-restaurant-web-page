@@ -12,9 +12,12 @@ const errorMsg = document.getElementById("error-msg");
 
 
 export async function display(data) { //map method boxeille?
-    for (let i = 0; i < data.length; i++) {
+    console.log(data);
+    while(container.firstChild){
+    container.removeChild(container.firstChild);
+    }
+    for (let i = 0; i <= data.length; i++) {
         let container = document.getElementById("container");
-        console.log(data);
 
 
         let box = document.createElement("div");
@@ -31,43 +34,62 @@ export async function display(data) { //map method boxeille?
         let nameElement = document.createElement("h2");
         let cityElement = document.createElement("p");
         let addressElement = document.createElement("p");
+        let companyElement = document.createElement("p");
 
         let nameText = document.createTextNode(data[i].name);
         let cityText = document.createTextNode(data[i].city);
         let addressText = document.createTextNode(data[i].address);
+        let companyText = document.createTextNode(data[i].company);
     
 
         nameElement.appendChild(nameText);
         cityElement.appendChild(cityText);
         addressElement.appendChild(addressText);
+        companyElement.appendChild(companyText);
 
         box.appendChild(nameElement);
         box.appendChild(cityElement);
         box.appendChild(addressElement);
+        box.appendChild(companyElement);
         container.appendChild(box);
     }
     
 }
 
-export async function filterRestaurants(data, category) {  //ei varmaa tarvi jokaselle kategorialle omaa vaan tai operaatio
-    const filteredArray = data.filter(item =>
-        item.city === 'Helsinki');
+export async function filterRestaurants(data, category) {
+    category = category.toLowerCase();
+    if (data.filter(item =>
+        item.city.toLowerCase() === category)) {
+        const filteredArray = data.filter(item =>
+        (item.city.toLowerCase() == category));
         return filteredArray;
+    }
+    if(category) {
+        for(let i = 0; i < 76; i++) {
+            console.log(data[i].name);
+            while(data[i].name.toLowerCase() != category) {
+                return data[i];
+            }
+        }
+    }
+        
 }
 
 export async function displayRestaurants(category){  //cleaanaappa tätä funktioo vähä
     let data = await getRestaurants();
     try {
         data.sort((a, b) => {              //aakkoset
-            let x = a.name.toLowerCase();
-            let y = b.name.toLowerCase();
+            let x = a.company.toLowerCase();
+            let y = b.company.toLowerCase();
             if (x < y) {return -1;}
             if (x > y) {return 1;}
             return 0;
         });
+        console.log(category);
 
         if(category) {
             const filteredData = await filterRestaurants(data, category);  //jos filtteri
+            console.log("res: "+ filteredData);
             await display(filteredData); //sitten displayaa filteröidyt ravintolat
         } else {
             await display(data); //jos ei filtterii nii näyttää kaikki
@@ -152,6 +174,6 @@ export async function displayRestaurantById(id) {
     }
 }
 
-export function displayError(message){
+export async function displayError(message){
     errorMsg.textContent = message;
 }
