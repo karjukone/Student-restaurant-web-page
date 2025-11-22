@@ -31,7 +31,7 @@ searchForm.addEventListener("submit", event => {
         dailyOrWeeklyBtn.style.backgroundColor = "pink";
         dailyOrWeeklyBtn.style.color = "darkgreen";
         dailyOrWeeklyBtn.textContent = "Show weekly menu";
-        displayRestaurantById(daily); //tähä sillee et "paljastaa" joko dailymenu tai weekly nii ei tarvi aina hakee uudestaa
+        displayRestaurantById(currentId); //tähä sillee et "paljastaa" joko dailymenu tai weekly nii ei tarvi aina hakee uudestaa
         daily = !daily;
     }
     else {

@@ -68,7 +68,7 @@ export async function getWeeklyMenu(id, lang) {
         }
         const weeklyData = await fetchData(url, options);
         console.log(weeklyData);
-        return weeklyData.days;
+        return weeklyData;
     }
     catch(error) {
         console.log(error);

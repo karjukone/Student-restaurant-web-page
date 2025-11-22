@@ -10,21 +10,22 @@ let dailyOrWeeklyBtn = document.getElementById("menu-btn");
 let currentId = '';
 const errorMsg = document.getElementById("error-msg");
 
+
 export async function display(data) { //map method boxeille?
     for (let i = 0; i < data.length; i++) {
         let container = document.getElementById("container");
+        console.log(data);
 
 
         let box = document.createElement("div");
         box.className = "box";
         box.setAttribute("id", `${data[i]._id}`); 
 
-
-        box.addEventListener("click", event => {
-            currentId = (event.target.id);
-            console.log(event.target.id);
+        box.addEventListener("click", function(event) {
+            const id = event.currentTarget.id;
+            currentId = id;
             modal.style.display = "block";
-            displayRestaurantById(event.target.id);
+            displayRestaurantById(id);
         });
 
         let nameElement = document.createElement("h2");
@@ -69,7 +70,7 @@ export async function displayRestaurants(category){  //cleaanaappa tätä funkti
             const filteredData = await filterRestaurants(data, category);  //jos filtteri
             await display(filteredData); //sitten displayaa filteröidyt ravintolat
         } else {
-            await display(); //jos ei filtterii nii näyttää kaikki
+            await display(data); //jos ei filtterii nii näyttää kaikki
         }
 
         
@@ -82,46 +83,72 @@ export async function displayRestaurants(category){  //cleaanaappa tätä funkti
 }
 
 export async function displayCard(menu) {
-    for (let j = 0; j < 7; j++) {
-        let dayOfWeek = document.createElement("h2");
-        dayOfWeek.textContent = menu[j].date;
-        for (let i = 0; i < menu.courses.length; i++) {   //lisää funktioon jota voi hyöd
-
-            let pName = document.createElement("p");
-            pName.textContent = menu[j].courses.name;
-
-            let pPrice = document.createElement("p");
-            pPrice.textContent = menu[i].courses.price;
-
-            let pDiets = document.createElement("p");
-            pDiets.textContent = menu[i].courses.diets;
-
-            const menudiv = document.getElementById("menudiv");
-
-            let courses = document.createElement("div");
-            courses.classList.add("menucard")
-            
-            courses.appendChild(pName);
-            courses.appendChild(pPrice);
-            courses.appendChild(pDiets);
-            menudiv.appendChild(courses);
-        }    
+    const menudiv = document.getElementById("menudiv");
+    while (menudiv.firstChild) {
+        menudiv.removeChild(menudiv.firstChild);
     }
+    const title = document.createElement('h1');
+    title.textContent = 'RUOKALISTA';
+    menudiv.appendChild(title);
+
+    if (!menu) return;
+    let days = [];
+    days = menu.days; 
+
+    days.forEach(day => {
+        const dayCard = document.createElement('div');
+        dayCard.classList.add('menucard');
+
+        const h2 = document.createElement('h2');
+        h2.textContent = day.date;
+        dayCard.appendChild(h2);
+
+        const courses = day.courses;
+        courses.forEach(course => {
+            const pName = document.createElement('p');
+            pName.textContent = course.name;
+
+            const pPrice = document.createElement('p');
+            pPrice.textContent = course.price;
+
+            const pDiets = document.createElement('p');
+            pDiets.textContent = course.diets;
+
+            dayCard.appendChild(pName);
+            dayCard.appendChild(pPrice);
+            dayCard.appendChild(pDiets);
+        });
+
+        menudiv.appendChild(dayCard);
+    });
 }
 
-export async function displayRestaurantById(daily) {
-    let data = await getRestaurantById(currentId);
-    let weeklyMenu = await getWeeklyMenu(currentId, language);
-    console.log('weekly: ' + weeklyMenu);
-    //let dailyMenu = await getDailyMenu(currentId);
-    await displayCard(weeklyMenu);
-    console.log('weekly: ' + weeklyMenu);
-    if(data) {
-        document.getElementById("name").textContent = data.name;
-        document.getElementById("address").textContent = data.address;
-        document.getElementById("postal-code").textContent = data.postalCode;
-        document.getElementById("phone").textContent = data.phone;
-        document.getElementById("city").textContent = data.city;
+export async function displayRestaurantById(id) {
+    if (!id) id = currentId;
+    currentId = id;
+
+    const data = await getRestaurantById(id);
+    if (!data) {
+        displayError('Restaurant data not available');
+        return;
+    }
+
+    const { name, address, postalCode: postCode, phone, city } = data;
+
+    const weeklyMenu = await getWeeklyMenu(id, language);
+
+    document.getElementById("name").textContent = name;
+    document.getElementById("address").textContent = address;
+    document.getElementById("postal-code").textContent = postCode;
+    document.getElementById("phone").textContent = phone;
+    document.getElementById("city").textContent = city;
+
+    try {
+        if (weeklyMenu) {
+            await displayCard(weeklyMenu);
+        }
+    } catch (err) {
+        console.error('Failed to render menu:', err);
     }
 }
 
