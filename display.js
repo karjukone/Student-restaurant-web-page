@@ -106,6 +106,7 @@ export async function displayRestaurants(category){  //cleaanaappa tätä funkti
 
 export async function displayCard(menu) {
     const menudiv = document.getElementById("menudiv");
+    const selectDay = document.getElementById("selectDay");
     while (menudiv.firstChild) {
         menudiv.removeChild(menudiv.firstChild);
     }
@@ -116,18 +117,22 @@ export async function displayCard(menu) {
     if (!menu) return;
     let days = [];
     days = menu.days; 
+    let dayId = 0;
 
     days.forEach(day => {
         const dayCard = document.createElement('div');
         dayCard.classList.add('menucard');
 
-        const h2 = document.createElement('h2');
-        h2.textContent = day.date;
-        dayCard.appendChild(h2);
+        const h3 = document.createElement('h3');
+        h3.setAttribute("id", `day${dayId}`);
+        dayId++;
+        h3.textContent = day.date;
+        dayCard.appendChild(h3);
+        
 
         const courses = day.courses;
         courses.forEach(course => {
-            const pName = document.createElement('p');
+            const pName = document.createElement('h4');
             pName.textContent = course.name;
 
             const pPrice = document.createElement('p');
@@ -150,6 +155,7 @@ export async function displayRestaurantById(id) {
     currentId = id;
 
     const data = await getRestaurantById(id);
+    console.log('id: ' + id);
     if (!data) {
         displayError('Restaurant data not available');
         return;

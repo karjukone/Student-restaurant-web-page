@@ -185,15 +185,29 @@ body {
 }
 
 .menudiv {
-    border: solid tomato 3px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content:baseline;
-    padding-left: 5rem;
+    padding-left: 2rem;
    
 }
 
 .menucard {
     font-size: 30px;
+}
+
+.menucard h3{
+    font-size: 3rem;
+}
+
+.menucard h4 {
+    font-size: 2rem;
+    font-weight: bold;
+
+}
+
+.menucard p {
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
 }
