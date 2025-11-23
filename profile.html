@@ -16,14 +16,33 @@
         </ul>
     </nav>
     <container id="log">
-        <p id="userError">t</p>
-        <div class="create-user">
+        <div class="userForm" id="createDiv">
+            <h2>LUO KÄYTTÄJÄ</h2>
             <form action="#" id="createUserForm">
                 <input type="text" placeholder="Username" id="username">
                 <input type="text" placeholder="Email" id="emailInput">
                 <input type="text" placeholder="Password" id="psswrd">
                 <button type="submit">Create user</button>
             </form>
+            <p id="userError" class="error"></p>
+            <p>Password must be at least 5 charachters</p> 
+            <p>Have an account?</p>
+            <button id="logInBtn" type="button">Log in</button>
+        </div>
+
+        <div id="logInDiv" class="userForm">
+            <h2>Tervetuloa takaisin! Kirjaudu sisään</h2>
+            <form action="#" id="logInForm">
+                <input type="text" placeholder="Username" id="username">
+                <input type="text" placeholder="Password" id="psswrd">
+                <button type="submit">Log in</button>
+            </form>
+            <p>Don't have an account?</p>
+            <button id="createBtn" type="button">Craete an account</button>
+        </div>
+        <div id="userCreated">
+            <p id="welcomeMsg"></p>
+            <a id="activationLink">Log in</a>
         </div>
     </container>
     <section>

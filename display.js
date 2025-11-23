@@ -12,13 +12,23 @@ const errorMsg = document.getElementById("error-msg");
 
 
 
-export async function display(data) { //map method boxeille?
+export async function display(data) { 
+    if(!data) {
+        data = await getRestaurants();
+    }
     displayError('');
-    console.log(data);
     while(container.firstChild){
     container.removeChild(container.firstChild);
     }
     try {
+        data.sort((a, b) => {              //aakkoset
+        let x = a.name.toLowerCase();
+        let y = b.name.toLowerCase();
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+        });
+
         if(data.length < 1) {
             displayError("Could not find match. Try again");
         }
@@ -80,7 +90,11 @@ export async function filterRestaurants(cityValue, companyValue) {
     const filteredArray = data.filter(item => 
         (item.city.toLowerCase() == cityValue && item.company.toLowerCase() == companyValue));
 
-    if(filteredArray.length > 0)
+
+    if(cityValue == '' && companyValue == '') {
+        display(data);
+    }    
+    else if(filteredArray.length > 0)
         display(filteredArray);
         
     else if(filteredCityArray.length > 0) {
@@ -95,25 +109,7 @@ export async function filterRestaurants(cityValue, companyValue) {
         
 }
 
-export async function displayRestaurants(){ 
-    let data = await getRestaurants();
-    try {
-        data.sort((a, b) => {              //aakkoset
-            let x = a.name.toLowerCase();
-            let y = b.name.toLowerCase();
-            if (x < y) {return -1;}
-            if (x > y) {return 1;}
-            return 0;
-        });
-        await display(data);
-        }
 
-    catch(error) {
-        console.log(error);
-    }
-    return data;
-
-}
 
 export async function displayCard(menu) {
     const menudiv = document.getElementById("menudiv");

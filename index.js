@@ -1,6 +1,6 @@
 import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu} from './fetch.js';
 
-import { display, displayRestaurants, displayRestaurantById, displayCard, displayError, filterRestaurants } from './display.js';
+import { display, displayRestaurantById, displayCard, displayError, filterRestaurants } from './display.js';
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
@@ -36,7 +36,7 @@ searchForm.addEventListener ("submit", async event => {
 
 removeFilterBtn.addEventListener ("click", async event => {
     event.preventDefault();
-    await displayRestaurants();
+    await display();
 })
 
 filterBtn.addEventListener ("click", async event => {
@@ -77,5 +77,6 @@ window.onclick = function(event) {
 }
 
 
-const data = await displayRestaurants();
+//let data = await getRestaurants();
+await display();
 

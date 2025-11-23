@@ -1,4 +1,4 @@
-.create-user {
+.userForm {
     width: 60%;
     margin: auto;
     justify-content: center;
@@ -8,23 +8,22 @@
     border: 3px solid;
 }
 
-.create-user form {
+.userForm form {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.create-user form input {
+.userForm form input {
     font-size: 25px;
     flex: 1 0 10rem;
     background-color: rgb(255, 225, 245);
 }
 
-
-.create-user form button {
+.userForm form button {
     flex: 1 0 5rem;
     font-size: 25px;
-    background-color: rgb(125, 87, 87);
+    background-color: rgb(255, 251, 224);
 }
 
 
@@ -35,5 +34,13 @@
     margin-top: 3rem;
     justify-content: center;
     text-align: center;
-    display: hidden;
+    display: none;
+}
+
+#createDiv {
+    display: none;
+}
+
+#userCreated {
+    display: none;
 }

@@ -108,7 +108,6 @@ export async function postNewUser(uname, psswrd, email) {
         }
         console.log(options);
         const msg = await fetchData(url, options);
-        console.log(msg);
         return msg;
     }
     catch(error) {
