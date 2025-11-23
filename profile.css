@@ -1,0 +1,39 @@
+.create-user {
+    width: 60%;
+    margin: auto;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 3px solid;
+}
+
+.create-user form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.create-user form input {
+    font-size: 25px;
+    flex: 1 0 10rem;
+    background-color: rgb(255, 225, 245);
+}
+
+
+.create-user form button {
+    flex: 1 0 5rem;
+    font-size: 25px;
+    background-color: rgb(125, 87, 87);
+}
+
+
+.profileCard {
+    background-color: rgb(250, 238, 231);
+    width: 60%;
+    margin: auto;
+    margin-top: 3rem;
+    justify-content: center;
+    text-align: center;
+    display: hidden;
+}

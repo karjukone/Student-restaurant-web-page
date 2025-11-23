@@ -1,4 +1,4 @@
-import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu, sendUserData } from './fetch.js';
+import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu} from './fetch.js';
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementsByClassName('search-input');
@@ -11,92 +11,103 @@ let currentId = '';
 const errorMsg = document.getElementById("error-msg");
 
 
+
 export async function display(data) { //map method boxeille?
+    displayError('');
     console.log(data);
     while(container.firstChild){
     container.removeChild(container.firstChild);
     }
-    for (let i = 0; i <= data.length; i++) {
-        let container = document.getElementById("container");
+    try {
+        if(data.length < 1) {
+            displayError("Could not find match. Try again");
+        }
+
+        for (let i = 0; i <= data.length; i++) {
+            let container = document.getElementById("container");
 
 
-        let box = document.createElement("div");
-        box.className = "box";
-        box.setAttribute("id", `${data[i]._id}`); 
+            let box = document.createElement("div");
+            box.className = "box";
+            box.setAttribute("id", `${data[i]._id}`); 
 
-        box.addEventListener("click", function(event) {
-            const id = event.currentTarget.id;
-            currentId = id;
-            modal.style.display = "block";
-            displayRestaurantById(id);
-        });
+            box.addEventListener("click", function(event) {
+                const id = event.currentTarget.id;
+                currentId = id;
+                modal.style.display = "block";
+                displayRestaurantById(id);
+            });
 
-        let nameElement = document.createElement("h2");
-        let cityElement = document.createElement("p");
-        let addressElement = document.createElement("p");
-        let companyElement = document.createElement("p");
+            let nameElement = document.createElement("h2");
+            let cityElement = document.createElement("p");
+            let addressElement = document.createElement("p");
+            let companyElement = document.createElement("p");
 
-        let nameText = document.createTextNode(data[i].name);
-        let cityText = document.createTextNode(data[i].city);
-        let addressText = document.createTextNode(data[i].address);
-        let companyText = document.createTextNode(data[i].company);
-    
+            let nameText = document.createTextNode(data[i].name);
+            let cityText = document.createTextNode(data[i].city);
+            let addressText = document.createTextNode(data[i].address);
+            let companyText = document.createTextNode(data[i].company);
+        
 
-        nameElement.appendChild(nameText);
-        cityElement.appendChild(cityText);
-        addressElement.appendChild(addressText);
-        companyElement.appendChild(companyText);
+            nameElement.appendChild(nameText);
+            cityElement.appendChild(cityText);
+            addressElement.appendChild(addressText);
+            companyElement.appendChild(companyText);
 
-        box.appendChild(nameElement);
-        box.appendChild(cityElement);
-        box.appendChild(addressElement);
-        box.appendChild(companyElement);
-        container.appendChild(box);
+            box.appendChild(nameElement);
+            box.appendChild(cityElement);
+            box.appendChild(addressElement);
+            box.appendChild(companyElement);
+            container.appendChild(box);
+        }
+    } catch(error) {
+        console.error(error);
     }
-    
+
 }
 
-export async function filterRestaurants(data, category) {
-    category = category.toLowerCase();
-    if (data.filter(item =>
-        item.city.toLowerCase() === category)) {
-        const filteredArray = data.filter(item =>
-        (item.city.toLowerCase() == category));
-        return filteredArray;
+export async function filterRestaurants(cityValue, companyValue) {
+    let data = await getRestaurants();
+    cityValue = cityValue.toLowerCase();
+    companyValue = companyValue.toLowerCase();
+
+    const filteredCompArray = data.filter(item =>
+        (item.company.toLowerCase() == companyValue && cityValue == '')
+    );
+    const filteredCityArray = data.filter(item =>
+        (item.city.toLowerCase() == cityValue && companyValue == ''));
+        
+    const filteredArray = data.filter(item => 
+        (item.city.toLowerCase() == cityValue && item.company.toLowerCase() == companyValue));
+
+    if(filteredArray.length > 0)
+        display(filteredArray);
+        
+    else if(filteredCityArray.length > 0) {
+        display(filteredCityArray);
+    }        
+    else if(filteredCompArray.length > 0) {
+        display(filteredCompArray);
     }
-    if(category) {
-        for(let i = 0; i < 76; i++) {
-            console.log(data[i].name);
-            while(data[i].name.toLowerCase() != category) {
-                return data[i];
-            }
-        }
+    else {
+        display(filteredArray);
     }
         
 }
 
-export async function displayRestaurants(category){  //cleaanaappa tätä funktioo vähä
+export async function displayRestaurants(){ 
     let data = await getRestaurants();
     try {
         data.sort((a, b) => {              //aakkoset
-            let x = a.company.toLowerCase();
-            let y = b.company.toLowerCase();
+            let x = a.name.toLowerCase();
+            let y = b.name.toLowerCase();
             if (x < y) {return -1;}
             if (x > y) {return 1;}
             return 0;
         });
-        console.log(category);
-
-        if(category) {
-            const filteredData = await filterRestaurants(data, category);  //jos filtteri
-            console.log("res: "+ filteredData);
-            await display(filteredData); //sitten displayaa filteröidyt ravintolat
-        } else {
-            await display(data); //jos ei filtterii nii näyttää kaikki
+        await display(data);
         }
 
-        
-    }
     catch(error) {
         console.log(error);
     }

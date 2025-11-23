@@ -76,8 +76,49 @@ export async function getWeeklyMenu(id, lang) {
 }
 
 
+export async function getUsernameAvailability(username) {
+    try{
+        const url = `https://media2.edu.metropolia.fi/restaurant/api/v1/users/available/${username}`;
+        const options = {
+            method: 'GET',
+        }
+        let isAvailable = await fetchData(url, options);
+        return isAvailable;
+    }
+    catch(error) {
+        console.log(error);
+    }   
+    
+}
 
-export async function sendUserData() {       //käyttäjätunnusta varten
+export async function postNewUser(uname, psswrd, email) {
+    try{
+        const user = {
+            "username": `${uname}`,
+            "password": `${psswrd}`,
+            "email":  `${email}`,
+        }
+        const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/users';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        }
+        console.log(options);
+        const msg = await fetchData(url, options);
+        console.log(msg);
+        return msg;
+    }
+    catch(error) {
+        console.log(error);
+    }   
+    
+}
+
+
+export async function logIn() {       //käyttäjätunnusta varten
  try {
      const user = {
        username : 'example.user',  ///tähä käyttäjä ja salasana
@@ -97,3 +138,6 @@ export async function sendUserData() {       //käyttäjätunnusta varten
      console.error('An error occurred:', error);
    }
 }  
+
+
+//delete and update ainakai ja upload avatar

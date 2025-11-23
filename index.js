@@ -1,4 +1,4 @@
-import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu, sendUserData} from './fetch.js';
+import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu} from './fetch.js';
 
 import { display, displayRestaurants, displayRestaurantById, displayCard, displayError, filterRestaurants } from './display.js';
 
@@ -11,6 +11,8 @@ let daily = true;
 let dailyOrWeeklyBtn = document.getElementById("menu-btn");
 const removeFilterBtn = document.getElementById("removeFilterBtn");
 const cityBtn = document.getElementById("cityBtn");
+const companyBtn = document.getElementById("companyBtn");
+const filterBtn = document.getElementById("filterBtn");
 let currentId = '';
 const errorMsg = document.getElementById("error-msg");
 
@@ -21,7 +23,7 @@ searchForm.addEventListener ("submit", async event => {
         console.log('Search input value:', category);
     if(category) {
         try{
-            await displayRestaurants(category);
+            await filterRestaurants(category, '');
         }
         catch(error){
             console.log(error);
@@ -37,9 +39,9 @@ removeFilterBtn.addEventListener ("click", async event => {
     await displayRestaurants();
 })
 
-cityBtn.addEventListener("click", async event => {
-    let cityValue = cityBtn.value;
-    await displayRestaurants(cityValue);
+filterBtn.addEventListener ("click", async event => {
+    event.preventDefault();
+    await filterRestaurants(cityBtn.value, companyBtn.value);
 })
 
 

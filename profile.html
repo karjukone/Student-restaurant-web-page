@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="profile.css">
     <title>Profile</title>
 </head>
 <body>
-    
+    <nav>
+        <ul id="nav-list">
+            <li><a href="index.html">Etusivu</a></li>
+            <li><a href="profile.html">profiili</a></li>
+            <li><a>kieli</a></li>
+        </ul>
+    </nav>
+    <container id="log">
+        <p id="userError">t</p>
+        <div class="create-user">
+            <form action="#" id="createUserForm">
+                <input type="text" placeholder="Username" id="username">
+                <input type="text" placeholder="Email" id="emailInput">
+                <input type="text" placeholder="Password" id="psswrd">
+                <button type="submit">Create user</button>
+            </form>
+        </div>
+    </container>
+    <section>
+        <div class="profileCard">
+
+            <span>
+                <h1>Username</h1>
+                <p>Tieto</p>
+            </span>
+        </div>
+    </section>
+    <script type="module" src="profile.js"></script>
 </body>
 </html>

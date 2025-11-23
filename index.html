@@ -21,7 +21,6 @@
             <button type="submit">
             </button>
         </form>
-        <p id="error-msg" class="error"></p>
     </div>
     <div class="filter">
         <select name="Valitse kaupunki" id="cityBtn">
@@ -53,11 +52,14 @@
             <option value="Ylivieska">Ylivieska</option>
         </select>
         <select name="company" id="companyBtn">
+            <option value="" selected>Valitse yritys</option>
             <option value="Compass Group">Compass Group</option>
             <option value="Sodexo">Sodexo</option>
         </select>
+        <button id="filterBtn" type="click">Hae</button>
         <button id="removeFilterBtn" type="click">Poista valinnat</button>
     </div>
+    <p id="error-msg" class="error"></p>
     <section id="restaurants">
         <div class="container" id="container">
         </div>
