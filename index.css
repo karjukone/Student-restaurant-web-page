@@ -182,7 +182,13 @@ body {
     font-size: 30px;
     border-radius: 15px;
     margin: 1rem 8rem;
-    
+    background-color: darkgreen;
+    color: pink;    
+}
+
+#modal-error-msg {
+    text-align: center;
+    color: red;
 }
 
 .menudiv {
@@ -192,6 +198,10 @@ body {
     justify-content:baseline;
     padding-left: 2rem;
    
+}
+
+#dailyDiv {
+    display: none;
 }
 
 .menucard {

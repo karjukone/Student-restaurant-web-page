@@ -1,6 +1,6 @@
 import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu} from './fetch.js';
 
-import { display, displayRestaurantById, displayCard, displayError, filterRestaurants } from './display.js';
+import { display, displayError, filterRestaurants } from './display.js';
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
@@ -23,7 +23,10 @@ searchForm.addEventListener ("submit", async event => {
         console.log('Search input value:', category);
     if(category) {
         try{
-            await filterRestaurants(category, '');
+            await filterRestaurants('', '', category);
+            searchInput.value = '';
+            //await filterRestaurants(category, '');
+            //await filterRestaurants('', category);
         }
         catch(error){
             console.log(error);
@@ -45,22 +48,23 @@ filterBtn.addEventListener ("click", async event => {
 })
 
 
-    dailyOrWeeklyBtn.addEventListener("click", event => {
-    if (daily) {
-        dailyOrWeeklyBtn.style.backgroundColor = "pink";
-        dailyOrWeeklyBtn.style.color = "darkgreen";
-        dailyOrWeeklyBtn.textContent = "Show weekly menu";
-        displayRestaurantById(currentId); //tähä sillee et "paljastaa" joko dailymenu tai weekly nii ei tarvi aina hakee uudestaa
-        daily = !daily;
-    }
-    else {
-        dailyOrWeeklyBtn.style.backgroundColor = "darkgreen";
-        dailyOrWeeklyBtn.style.color = "pink";
-        dailyOrWeeklyBtn.textContent = "Show daily menu";
-        let weeklyMenu = getWeeklyMenu(currentId);
-        displayCard(weeklyMenu, language);
-        daily = true;        
-    }
+dailyOrWeeklyBtn.addEventListener("click", event => {
+if (daily) {
+    dailyOrWeeklyBtn.style.backgroundColor = "pink";
+    dailyOrWeeklyBtn.style.color = "darkgreen";
+    dailyOrWeeklyBtn.textContent = "Show weekly menu";
+    document.getElementById('weeklyDiv').style.display = 'none';
+    document.getElementById('dailyDiv').style.display = 'flex';
+    daily = false;
+}
+else {
+    dailyOrWeeklyBtn.style.backgroundColor = "darkgreen";
+    dailyOrWeeklyBtn.style.color = "pink";
+    dailyOrWeeklyBtn.textContent = "Show daily menu";
+    document.getElementById('dailyDiv').style.display = 'none';
+    document.getElementById('weeklyDiv').style.display = 'flex';
+    daily = true;        
+}
 });
 
 
