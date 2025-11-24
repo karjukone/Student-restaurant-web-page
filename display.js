@@ -1,4 +1,4 @@
-import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu} from './fetch.js';
+import {getRestaurants, getRestaurantById, getDailyMenu, getWeeklyMenu, updateUser, getUser} from './fetch.js';
 
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementsByClassName('search-input');
@@ -10,8 +10,10 @@ let dailyOrWeeklyBtn = document.getElementById("menu-btn");
 let currentId = '';
 const errorMsg = document.getElementById("error-msg");
 const modalErrorMsg = document.getElementById("modal-error-msg");
+const favsDiv = document.getElementById("favs");
 
 
+let favDivs = [];
 
 export async function display(data) { 
     if(!data) {
@@ -54,22 +56,44 @@ export async function display(data) {
             let cityElement = document.createElement("p");
             let addressElement = document.createElement("p");
             let companyElement = document.createElement("p");
+            //let favBtn = document.createElement("button");
+
+            //favBtn.addEventListener("click", async event => {
+               // if (localStorage.getItem("token")) {
+                  //  let divId = event.target.parentElement.id;
+                 //   favBtn.style.color = "red";
+                  //  await updateUser(divId);
+                 //   document.getElementById("favH").textContent = 'Suosikki ravintolat: ';
+                   // if (favDivs.includes(divId)) {
+                     //   favDivs.pop(divId);
+                   // }else {
+                  //      favDivs.push(divId);
+                  //  }
+               //     await displayFavRes(divId);
+              //  }else{
+              //      window.location.href = 'profile.html';
+              //  }
+           // })
+    
 
             let nameText = document.createTextNode(data[i].name);
             let cityText = document.createTextNode(data[i].city);
             let addressText = document.createTextNode(data[i].address);
             let companyText = document.createTextNode(data[i].company);
+            //let favText = document.createTextNode('Lisää suosikkeihin');
         
 
             nameElement.appendChild(nameText);
             cityElement.appendChild(cityText);
             addressElement.appendChild(addressText);
             companyElement.appendChild(companyText);
+            //favBtn.appendChild(favText);
 
             box.appendChild(nameElement);
             box.appendChild(cityElement);
             box.appendChild(addressElement);
             box.appendChild(companyElement);
+           // box.appendChild(favBtn);
             container.appendChild(box);
         }
     } catch(error) {
@@ -77,6 +101,7 @@ export async function display(data) {
     }
 
 }
+
 
 export async function filterRestaurants(cityValue, companyValue, resNameValue) {
     let data = await getRestaurants();

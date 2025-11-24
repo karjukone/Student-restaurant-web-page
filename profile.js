@@ -57,11 +57,9 @@ createUserForm.addEventListener ("submit", async event => {
         userError3.textContent = 'Salasanan pitää olla vähintään 5 merkkiä';
         return;
     }
-     else {
-        
-    }
 
     let res = await postNewUser(user, psswrd, emailValue);
+    localStorage.setItem("password", psswrd);
 
     if(!res) {
         userError.textContent = 'Käyttäjänimi tai sähköposti jo käytössä';
@@ -121,12 +119,12 @@ logInForm.addEventListener("submit", async event => {
 
     let res = await logIn(username, password);
     token = res.token;
-    localStorage.setItem("token", token);
-    localStorage.setItem("username", username);
     
 
     localStorage.setItem("loggedIn", "true");
+    localStorage.setItem("token", token);
     displayUser(token);
+    emptyErrorMsg();
 
 
 
@@ -136,13 +134,13 @@ logInForm.addEventListener("submit", async event => {
     }
 })
 
-async function displayUser(token) {
+async function displayUser() {
     if(localStorage.getItem("loggedIn") === "false") {
         logInDiv.style.display = "block";
         profileDiv.style.display = "none";
         return;
     }
-    let data = await getUser(token);
+    let data = await getUser();
 
     logInDiv.style.display = "none";
     profileDiv.style.display = "block";
@@ -151,6 +149,7 @@ async function displayUser(token) {
     document.getElementById("placeForRole").textContent = `Rooli: ${data.role}`;
 
     localStorage.setItem("email", data.email);
+    localStorage.setItem("username", data.username);
 
     let updateMode = document.getElementById("updateMode");
 
@@ -170,14 +169,18 @@ logOutBtn.addEventListener("click", async event => {
 })
 
 goBackBtn.addEventListener("click", async event => {
+    displayUser();
     profileDiv.style.display = "block";
     modifyDiv.style.display = "none";
-    emptyErrorMsg()
+    emptyErrorMsg();
 })
 
 async function logOut() {
     logInDiv.style.display = "block";
     profileDiv.style.display = "none";
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
     localStorage.removeItem("token");
     localStorage.setItem("loggedIn", "false");
     console.log("Logged out...");
@@ -195,21 +198,15 @@ sendNewInfo.addEventListener("click",async event => {
     let newPsswrd = document.getElementById("newPsswrd").value;
 
     console.log(newUser);
-    if(newUser && newUser.length < 3 && newUser.length > 0) {
-        userError2.textContent = 'Käyttäjänimen pitää olla vähintään 3 merkkiä pitkä';
-        return;
-    }else if (newPsswrd && newPsswrd.length < 5 && newPsswrd.length > 0) {
-        userError3.textContent = 'Salasanan pitää olla vähintään 5 merkkiä';
-        return;
-    }else if(!newUser && !newMail && !newPsswrd) {
+    if(!newUser && !newMail && !newPsswrd) {
         userError.textContent = 'Kentät on tyhjät';
         return;
     }else if(newUser) {
-        localStorage.setItem("username", "newUser");
+        localStorage.setItem("username", newUser);
     }else if(newPsswrd) {
-        localStorage.setItem("password", "password");
+        localStorage.setItem("password", newPsswrd);
     }else if(newMail) {
-        localStorage.setItem("email", "email");
+        localStorage.setItem("email", newMail);
     }
 
     console.log(newMail, newPsswrd, newUser);

@@ -106,6 +106,7 @@ export async function postNewUser(uname, psswrd, email) {
             body: JSON.stringify(user),
         }
         console.log(options);
+        const msg = await fetchData(url, options);
         return msg;
     }
     catch(error) {
@@ -167,10 +168,11 @@ export async function updateUser(favouriteRestaurant) {
         const email = localStorage.getItem("email");
         const user = {
             "username": `${username}`,
+            "favouriteRestaurant": `${favouriteRestaurant}`,
             "password": `${password}`,
             "email": `${email}`,
         }
-        const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login';
+        const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/users';
         const options = {
             method: 'PUT',
             headers: {
