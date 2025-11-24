@@ -1,4 +1,4 @@
-import {getUsernameAvailability, postNewUser, logIn, getUser} from './fetch.js';
+import {getUsernameAvailability, postNewUser, logIn, getUser, updateUser} from './fetch.js';
 
 import { } from './display.js';
 
@@ -20,14 +20,13 @@ const logInBtn = document.getElementById("logInBtn");
 const createBtn = document.getElementById("createBtn");
 const profileDiv = document.getElementById("profileDiv");
 let token = '';
-let loggedIn = false;
+const sendNewInfo = document.getElementById("sendNewInfo");
+const modifyDiv = document.getElementById("modifyDiv");
 
 
 
 usernameInput.addEventListener ("keydown", async event => {
-    userError.textContent = '';
-    userError3.textContent = '';
-    userError2.textContent = '';
+    emptyErrorMsg()
     let user = usernameInput.value;
     let isAvailable = await getUsernameAvailability(user);
     console.log(isAvailable);
@@ -75,17 +74,13 @@ createUserForm.addEventListener ("submit", async event => {
 logInBtn.addEventListener("click", event => {
     createUserDiv.style.display = "none";
     logInDiv.style.display = "block";
-    userError.textContent = '';
-    userError3.textContent = '';
-    userError2.textContent = '';
+    emptyErrorMsg()
 })
 
 createBtn.addEventListener("click", event => {
     createUserDiv.style.display = "block";
     logInDiv.style.display = "none";
-    userError.textContent = '';
-    userError3.textContent = '';
-    userError2.textContent = '';
+    emptyErrorMsg()
 })
 
 async function displayCreatedUserStatus(res) {
@@ -127,6 +122,8 @@ logInForm.addEventListener("submit", async event => {
     let res = await logIn(username, password);
     token = res.token;
     localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
+    
 
     localStorage.setItem("loggedIn", "true");
     displayUser(token);
@@ -149,15 +146,86 @@ async function displayUser(token) {
 
     logInDiv.style.display = "none";
     profileDiv.style.display = "block";
-    console.log(data.username);
-    document.getElementById("placeForName").textContent = `${data.username}`;
-    document.getElementById("placeForMail").textContent = data.email;
-    document.getElementById("placeForRole").textContent = data.role;
+    document.getElementById("placeForName").textContent = `Käyttäjätunnus: ${data.username}`;
+    document.getElementById("placeForMail").textContent = `Sähköposti: ${data.email}`;
+    document.getElementById("placeForRole").textContent = `Rooli: ${data.role}`;
+
+    localStorage.setItem("email", data.email);
+
+    let updateMode = document.getElementById("updateMode");
+
+    updateMode.addEventListener("click", event => {
+        profileDiv.style.display = "none";
+        modifyDiv.style.display = "block";
+
+    })
+}
+
+const logOutBtn = document.getElementById("logOutBtn");
+const goBackBtn = document.getElementById("goBackBtn");
+
+
+logOutBtn.addEventListener("click", async event => {
+    logOut();
+})
+
+goBackBtn.addEventListener("click", async event => {
+    profileDiv.style.display = "block";
+    modifyDiv.style.display = "none";
+    emptyErrorMsg()
+})
+
+async function logOut() {
+    logInDiv.style.display = "block";
+    profileDiv.style.display = "none";
+    localStorage.removeItem("token");
+    localStorage.setItem("loggedIn", "false");
+    console.log("Logged out...");
+    window.alert("User logged out succesfully");
 }
 
 
+
+
+
+sendNewInfo.addEventListener("click",async event => {
+    let newUser = document.getElementById("newUser").value;
+    newUser = newUser.value;
+    let newMail = document.getElementById("newEmail").value;
+    let newPsswrd = document.getElementById("newPsswrd").value;
+
+    console.log(newUser);
+    if(newUser && newUser.length < 3 && newUser.length > 0) {
+        userError2.textContent = 'Käyttäjänimen pitää olla vähintään 3 merkkiä pitkä';
+        return;
+    }else if (newPsswrd && newPsswrd.length < 5 && newPsswrd.length > 0) {
+        userError3.textContent = 'Salasanan pitää olla vähintään 5 merkkiä';
+        return;
+    }else if(!newUser && !newMail && !newPsswrd) {
+        userError.textContent = 'Kentät on tyhjät';
+        return;
+    }else if(newUser) {
+        localStorage.setItem("username", "newUser");
+    }else if(newPsswrd) {
+        localStorage.setItem("password", "password");
+    }else if(newMail) {
+        localStorage.setItem("email", "email");
+    }
+
+    console.log(newMail, newPsswrd, newUser);
+
+    await updateUser();
+    emptyErrorMsg()
+})
+
 export async function displayError(message){
     errorMsg.textContent = message;
+}
+
+function emptyErrorMsg() {
+    userError.textContent = '';
+    userError3.textContent = '';
+    userError2.textContent = '';
 }
 
 

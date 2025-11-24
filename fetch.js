@@ -139,8 +139,9 @@ export async function logIn(username, password) {
     }   
 }  
 
-export async function getUser(token) {   
+export async function getUser() {   
    try{
+    const token = localStorage.getItem("token");
         const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/users/token';
         const options = {
             method: 'GET',
@@ -157,6 +158,36 @@ export async function getUser(token) {
         console.log(error);
     }   
 }  
+
+export async function updateUser(favouriteRestaurant) {
+    try{
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+        const email = localStorage.getItem("email");
+        const user = {
+            "username": `${username}`,
+            "password": `${password}`,
+            "email": `${email}`,
+        }
+        const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login';
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(user),
+        }
+        console.log(options);
+        const msg = await fetchData(url, options);
+        console.log(msg);
+        return msg;
+    }
+    catch(error) {
+        console.log(error);
+    }   
+}          
+
 
 
 //delete and update ainakai ja upload avatar

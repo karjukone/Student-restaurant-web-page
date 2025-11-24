@@ -15,21 +15,19 @@
             <li><a>kieli</a></li>
         </ul>
     </nav>
+
     <container id="log">
         <div class="userForm" id="createDiv">
             <h2>LUO KÄYTTÄJÄ</h2>
             <form action="#" id="createUserForm">
                 <input type="text" placeholder="Username" id="username">
-                <input type="text" placeholder="Email" id="emailInput">
-                <input type="text" placeholder="Password" id="psswrd">
+                <input type="email" placeholder="Email" id="emailInput">
+                <input type="password" placeholder="Password" id="psswrd">
                 <button type="submit">Create user</button>
             </form> 
             <p>Have an account?</p>
             <button id="logInBtn" type="click">Log in</button>
         </div>
-        <p id="userError" class="error"></p>
-        <p id="userError2" class="error"></p>
-        <p id="userError3" class="error"></p>
 
         <div id="logInDiv" class="userForm">
             <h2>Tervetuloa takaisin! Kirjaudu sisään</h2>
@@ -49,12 +47,29 @@
     <section>
         <div class="profileCard" id="profileDiv">
             <span>
-                <h1 id="placeForName">Username</h1>
+                <h1>Omat tiedot: </h1>
+                <h2 id="placeForName">Username</h2>
                 <p id="placeForMail">Tieto</p>
                 <p id="placeForRole"></p>
+                <button id="logOutBtn">Kirjaudu ulos</button>
+                <button id="updateMode">Muokkaa tietojasi</button>
             </span>
+        </div>
+        <div id="modifyDiv" class="profileCard">
+            <button id="goBackBtn">Takaisin</button>
+            <form action="#" id="updateUserForm"></form>
+            <p>Uusi käyttäjätunnus: </p>
+            <input type="text" id="newUser">
+            <p>Uusi sähköposti: </p>
+            <input type="text" id="newEmail">
+            <p>Uusi salasana: </p>
+            <input type="text" id="newPsswrd">
+            <button id="sendNewInfo">Päivitä</button>
         </div>
     </section>
     <script type="module" src="profile.js"></script>
+    <p id="userError" class="error"></p>
+    <p id="userError2" class="error"></p>
+    <p id="userError3" class="error"></p>
 </body>
 </html>
