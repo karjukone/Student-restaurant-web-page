@@ -41,6 +41,10 @@
     display: none;
 }
 
+#logInDiv {
+    display: none;
+}
+
 #userCreated {
     display: none;
 }

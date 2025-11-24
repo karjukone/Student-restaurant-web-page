@@ -51,7 +51,6 @@ export async function getDailyMenu(id, lang) {
             method: 'GET',
         }
         const dailyData = fetchData(url, options);
-        //console.log(dailyData.courses)
         return (dailyData);
     }
     catch(error) {
@@ -107,7 +106,6 @@ export async function postNewUser(uname, psswrd, email) {
             body: JSON.stringify(user),
         }
         console.log(options);
-        const msg = await fetchData(url, options);
         return msg;
     }
     catch(error) {
@@ -117,25 +115,47 @@ export async function postNewUser(uname, psswrd, email) {
 }
 
 
-export async function logIn() {       //käyttäjätunnusta varten
- try {
-     const user = {
-       username : 'example.user',  ///tähä käyttäjä ja salasana
-       passwork : 'salasana'
-     };
-     const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login';
-     const options = {
-       method: 'POST',
-       headers: {
-           'Content-Type': 'application/json',
-       },
-       body: JSON.stringify(user)
-     }
-     const userData = await fetchData(url, options);
-     console.log('data:', userData);
-   } catch (error) {
-     console.error('An error occurred:', error);
-   }
+export async function logIn(username, password) {  
+   try{
+        const user = {
+            "username": `${username}`,
+            "password": `${password}`
+        }
+        const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/auth/login';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        }
+        console.log(options);
+        const msg = await fetchData(url, options);
+        console.log(msg);
+        return msg;
+    }
+    catch(error) {
+        console.log(error);
+    }   
+}  
+
+export async function getUser(token) {   
+   try{
+        const url = 'https://media2.edu.metropolia.fi/restaurant/api/v1/users/token';
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        }
+        console.log(options);
+        const msg = await fetchData(url, options);
+        console.log(msg);
+        return msg;
+    }
+    catch(error) {
+        console.log(error);
+    }   
 }  
 
 

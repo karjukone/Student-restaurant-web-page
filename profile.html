@@ -23,20 +23,19 @@
                 <input type="text" placeholder="Email" id="emailInput">
                 <input type="text" placeholder="Password" id="psswrd">
                 <button type="submit">Create user</button>
-            </form>
-            <p id="userError" class="error"></p>
-            <p id="userError2" class="error"></p>
-            <p id="userError3" class="error"></p>
-            <p>Password must be at least 5 charachters</p> 
+            </form> 
             <p>Have an account?</p>
             <button id="logInBtn" type="click">Log in</button>
         </div>
+        <p id="userError" class="error"></p>
+        <p id="userError2" class="error"></p>
+        <p id="userError3" class="error"></p>
 
         <div id="logInDiv" class="userForm">
             <h2>Tervetuloa takaisin! Kirjaudu sisään</h2>
             <form action="#" id="logInForm">
-                <input type="text" placeholder="Username" id="username">
-                <input type="text" placeholder="Password" id="psswrd">
+                <input type="text" placeholder="Username" id="username2">
+                <input type="text" placeholder="Password" id="psswrd2">
                 <button type="submit">Log in</button>
             </form>
             <p>Don't have an account?</p>
@@ -48,11 +47,11 @@
         </div>
     </container>
     <section>
-        <div class="profileCard">
-
+        <div class="profileCard" id="profileDiv">
             <span>
-                <h1>Username</h1>
-                <p>Tieto</p>
+                <h1 id="placeForName">Username</h1>
+                <p id="placeForMail">Tieto</p>
+                <p id="placeForRole"></p>
             </span>
         </div>
     </section>

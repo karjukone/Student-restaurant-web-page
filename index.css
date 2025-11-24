@@ -101,9 +101,12 @@ body {
 .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
+    margin: auto;
     align-items: center;
     flex-grow: 1rem;
+    column-gap: 1rem;
+    row-gap: 1rem;
     width: 80%;
 }
 
