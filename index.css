@@ -1,6 +1,6 @@
 body {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color:rgb(249, 233, 213);
+    font-family:'Open Sans', 'Arial Narrow', Arial, sans-serif;
+    background-color: #ffdabc;
     margin: 0;
     padding: 0;
     align-items: center;
@@ -11,13 +11,15 @@ body {
     list-style-type: none;
     margin: 0;
     padding-left: 7rem;
-    background-color: bisque;
+    background-color: #f4887c;
     justify-content: space-around;
     display: flex;
 }
 
 
 #nav-list li a {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
     display: block;
     color: rgb(79, 0, 0);
     text-align: center;
@@ -26,7 +28,7 @@ body {
 }
 
 #nav-list li a:hover {
-    background-color: rgb(197, 174, 147);
+    background-color: #f77676;
 }
 
 .search {
@@ -38,7 +40,7 @@ body {
 }
 
 .search input[type="text"] {
-    padding: 1rem 10rem;
+    padding: 1rem 10rem 1rem 10px;
     margin-right: 10px;
     border: none;
     font-size: 17px;
@@ -64,25 +66,36 @@ body {
 }
 
 .filter {
-    margin: 1rem 5rem 5rem;
-    padding: 2rem;
-    background-color: white;
+    margin: auto;
+    padding: 4rem 10px;
+    background-color:#f79c78;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
+    width: 90%;
+}
+
+.filter option, select{
+    margin: 0px 10px;
+    background-color:#ffded1;
+    font-size: 15px;
+    color: #462d26;
+    flex: 1 0 10rem;
 }
 
 .filter button {
-    background-color: rgb(250, 208, 208);
-    color: darkgreen;
+    background-color: tomato;
+    color: white;
     padding: 1rem 4rem;
     font-size: 1rem;
-    border-color:  rgb(250, 192, 192);
+    border-color: tomato;
     border-radius: 15px;
+    flex: 1 0 10rem;
 }
 
 .filter button:hover {
-    background: darkgreen;
-    color:  rgb(250, 208, 208);
+    background: rgb(247, 67, 35);
+    color:  white;
 }
 
 .error {

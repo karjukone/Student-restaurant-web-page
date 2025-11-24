@@ -5,7 +5,7 @@
     background-color: rgb(255, 255, 255);
     margin-top: 3rem;
     padding: 2rem;
-    border: 3px solid;
+    border: #fff5d3 solid 1px;
 }
 
 .userForm form {
@@ -17,25 +17,78 @@
 .userForm form input {
     font-size: 25px;
     flex: 1 0 10rem;
-    background-color: rgb(255, 225, 245);
+    background-color: rgb(255, 242, 200);
 }
 
 .userForm form button {
     flex: 1 0 5rem;
     font-size: 25px;
-    background-color: rgb(255, 251, 224);
 }
 
+.userForm p{
+    font-size: 20px;
+    color: #494440;
+}
+
+button {
+    background-color: cornflowerblue;
+    color: white;
+    font-size: 20px;
+}
+
+#goBackBtn{
+  
+    margin: 0px 90rem 50px 2rem;
+    float: left;
+}
 
 .profileCard {
-    background-color: rgb(250, 238, 231);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background-color: #fff5d3;
+    color: #72665c;
     width: 60%;
     margin: auto;
     margin-top: 3rem;
     justify-content: center;
     text-align: center;
     display: none;
+    height: 30rem;
 }
+
+.profileCard h1, h2{
+    padding: 1rem;
+}
+
+.profileCard p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 30px;
+}
+
+.profileCard input {
+    width: 60%;
+}
+
+#sendNewInfo {
+    margin: 2rem, 2rem;
+    width: 40%;
+}
+
+
+.profileCard button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 15px;
+    background-color: #E5BEB5;
+    margin-top: 2rem;
+}
+
+.profileCard button:hover {
+    background-color: #eaa494;
+}
+
 
 #createDiv {
     display: none;
@@ -45,6 +98,23 @@
     display: none;
 }
 
+
 #userCreated {
+    margin: auto;
+    text-align: center;
+    width: 80%;
     display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#welcomeMsg {
+    width: 100%;
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+}
+
+#activationLink {
+    width: 100%;
+
 }

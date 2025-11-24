@@ -108,10 +108,14 @@ export async function filterRestaurants(cityValue, companyValue, resNameValue) {
     cityValue = cityValue.toLowerCase();
     companyValue = companyValue.toLowerCase();
 
-    const filteredNameArray = data.filter(item => 
+    let filteredNameArray = {};
+
+    if(resNameValue){
+    filteredNameArray = data.filter(item => 
         item.name.toLowerCase() == resNameValue.toLowerCase()
     );
-    console.log(filteredNameArray);
+    }
+
 
     const filteredCompArray = data.filter(item =>
         (item.company.toLowerCase() == companyValue && cityValue == '')
@@ -135,7 +139,7 @@ export async function filterRestaurants(cityValue, companyValue, resNameValue) {
     else if(filteredCompArray.length > 0) {
         display(filteredCompArray);
     }
-    else if(filteredNameArray.length > 0) {
+   else if(filteredNameArray.length > 0) {
         display(filteredNameArray);
     }
     else {
