@@ -11,12 +11,20 @@ let usernameInput = document.getElementById("username");
 let emailInput = document.getElementById("emailInput");
 let psswrdInput = document.getElementById("psswrd");
 const userError = document.getElementById("userError");
+const userError2 = document.getElementById("userError2");
+const userError3 = document.getElementById("userError3");
 const a = document.getElementById("activationLink");
 const logInBtn = document.getElementById("logInBtn");
 const createBtn = document.getElementById("createBtn");
+let user = usernameInput.value;
+let emailValue = emailInput.value;
+let psswrd = psswrdInput.value;
 
 
 usernameInput.addEventListener ("keydown", async event => {
+    userError.textContent = '';
+    userError3.textContent = '';
+    userError2.textContent = '';
     let user = usernameInput.value;
     let isAvailable = await getUsernameAvailability(user);
     console.log(isAvailable);
@@ -30,12 +38,36 @@ usernameInput.addEventListener ("keydown", async event => {
 })
 
 createUserForm.addEventListener ("submit", async event => {
+    event.preventDefault();
+
     let user = usernameInput.value;
     let emailValue = emailInput.value;
     let psswrd = psswrdInput.value;
 
+    console.log(user.length, psswrd.length, emailValue.length);
+
+    if(user.length < 1 || psswrd.length < 1 || emailValue.length < 1) {
+        userError.textContent = 'Täytä kaikki kentät';
+        return;
+    }
+    else if(user.length < 3) {
+        userError2.textContent = 'Käyttäjänimen pitää olla vähintään 3 merkkiä pitkä';
+        return;
+    }else if (psswrd.length < 5) {
+        userError3.textContent = 'Salasanan pitää olla vähintään 5 merkkiä';
+        return;
+    }
+     else {
+        
+    }
+
     let res = await postNewUser(user, psswrd, emailValue);
-    console.log(res);
+
+    if(!res) {
+        userError.textContent = 'Käyttäjänimi tai sähköposti jo käytössä';
+        return;
+    }
+    console.log('res: ' + res);
     await displayCreatedUserStatus(res);
 }
 )
@@ -55,7 +87,8 @@ async function displayCreatedUserStatus(res) {
     p.textContent = `Tervetuloa ${res.data.username}! Aktivoi käyttäjä linkistä: `
     a.textContent = `${res.activationUrl} .`;
     a.href = `${res.activationUrl}`;
-    a.title = "This is a link"
+    a.title = "This is a link";
+    
 
     console.log(res);
     createUserDiv.style.display = "none";
